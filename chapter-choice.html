@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Choose a subject</title>
+        <link rel="stylesheet" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <header>
+            <img src="/Assets/Logo-Import-Ready-White.svg" alt="STEMAlive" />
+        </header>
+        <div id="chapter-choice">
+            <div id="chapter-text">
+                <h1>Choose your chapter</h1>
+
+                <select id="chapterSelect">
+                    <option value="chapter-1">Foundations of Motion</option>
+                    <option value="chapter-2">Forces and Energyt</option>
+                </select>
+                <hr />
+
+                <div id="chapter-description">
+                    <h3 id="chapter-title">Foundations of Motion</h3>
+                    <p id="description">
+                        Discover how objects move and why they move the way they do. Learn how forces, speed, and
+                        acceleration shape the motion of everything around us. Explore Newton’s Laws of Motion through
+                        real-world examples and understand the basic rules that govern movement.
+                    </p>
+                    <button id="next-button">NEXT</button>
+                </div>
+            </div>
+
+            <div id="chapterAPI">
+                <img src="Assets/Newton-Apple.jpg" alt="Image of Isaac Newton" />
+            </div>
+        </div>
+        <script src="chapter-loader.js"></script>
+    </body>
+</html>

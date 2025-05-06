@@ -1,3 +1,5 @@
+// subject-choose-script.js
+
 // Get the select element and description elements
 const scientistSelect = document.getElementById('scientistSelect');
 const subjectTitle = document.getElementById('subject-title');
@@ -24,11 +26,12 @@ const content = {
 };
 
 // Add an event listener to the select element
-scientistSelect.addEventListener('change', function() {
-    // Get the selected value
+scientistSelect.addEventListener('change', function () {
     const selectedScientist = this.value;
-    
-    // Update the content based on the selection
+
+    // Save selected scientist to localStorage
+    localStorage.setItem('selectedScientist', selectedScientist);
+
     subjectTitle.textContent = content[selectedScientist].title;
     description.innerHTML = content[selectedScientist].desc;
 });

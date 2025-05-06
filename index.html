@@ -1,31 +1,29 @@
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>STEM Alive</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STEM Alive</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <body>
+        <div id="index-logo">
+            <img src="Assets/Logo-Import-Ready.svg" alt="STEMAlive" />
+        </div>
+        <main>
+            <h1>Learn STEM the new way</h1>
 
-<body>
-    <header class="header">
-        <img id="logo" src="Assets/Logo-Import-Ready.svg" alt="STEMAlive logo">
-    </header>
+            <form action="https://it-fact.be/form.php" id="login-form" method="post">
+                <label for="name">Name</label>
+                <input id="name" name="name" placeholder="Name Surname" required type="text" />
 
-    <main>
-        <h1>Learn STEM the new way</h1>
+                <label for="email">Email</label>
+                <input id="email" name="email" placeholder="name@gmail.com" required type="email" />
 
-        <form action="https://it-fact.be/form.php" id="login-form" method="post">
-            <label for="name">Name</label>
-            <input id="name" name="name" placeholder="Name Surname" required type="text">
-            <label for="email">Email</label>
-            <input id="email" name="email" placeholder="name@gmail.com" required type="email">
-            <label for="Login"></label>
-            <button id="Login" name="Login" type="submit">Login</button>
-                <p>By continuing, you acknowledge the STEM Alive Privacy Policy.
-            </p>
-        </form>
-    </main>
-</body>
+                <a href="subjects-choice.html" id="login-link" class="login-button">Login</a>
 
+                <p>By continuing, you acknowledge the STEM Alive Privacy Policy.</p>
+            </form>
+        </main>
+    </body>
 </html>
