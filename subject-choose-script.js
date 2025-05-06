@@ -8,20 +8,20 @@ const description = document.getElementById('description');
 // Define the content for each option
 const content = {
     isaac: {
-        title: "Physics, Mathematics, and Scientific Inquiry",
-        desc: "Students interact with Isaac Newton, the father of classical physics, to learn about his groundbreaking discoveries, including the laws of motion, universal gravitation, and calculus."
+        title: "Physics, Motion, and Gravitation",
+        desc: "Interact with Isaac Newton to explore classical mechanics—from the laws of motion to universal gravitation—using hands-on STEM activities."
     },
     albert: {
-        title: "Relativity and Modern Physics",
-        desc: "Students explore with Albert Einstein the revolutionary theories of special and general relativity, learning about spacetime, energy-mass equivalence, and how these concepts changed our understanding of the universe."
+        title: "Relativity and the Nature of Spacetime",
+        desc: "Explore Einstein’s special and general relativity, learning how time, space, and gravity intertwine in our universe."
     },
     tesla: {
-        title: "Electricity and Electromagnetic Innovation",
-        desc: "Students collaborate with Nikola Tesla to understand his pioneering work in electrical engineering, including alternating current (AC) power systems, wireless transmission of energy, and revolutionary contributions to electromagnetism."
+        title: "Electricity, Innovation, and Wireless Power",
+        desc: "Discover Tesla’s legacy in AC power, wireless energy transfer, and modern electrical engineering innovations."
     },
     galileo: {
-        title: "Mechanics and Astronomical Observations",
-        desc: "Students join Galileo Galilei in his scientific journey, examining his contributions to mechanics, the development of the scientific method, and his astronomical observations that supported the heliocentric model."
+        title: "Scientific Method and Space Discoveries",
+        desc: "Join Galileo to understand motion, invent the scientific method, and unlock the secrets of the cosmos through telescopic observations."
     }
 };
 
