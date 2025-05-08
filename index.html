@@ -1,29 +1,118 @@
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>STEM Alive</title>
+        <meta
+            name="description"
+            content="STEM Alive - Learn STEM the modern way with interactive courses and resources" />
+        <title>STEM Alive | Modern STEM Learning Platform</title>
         <link rel="stylesheet" href="style.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer" />
     </head>
-
     <body>
-        <div id="index-logo">
-            <img src="Assets/Logo-Import-Ready.svg" alt="STEMAlive" />
-        </div>
-        <main>
-            <h1>Learn STEM the new way</h1>
+        <header>
+            <img src="/Assets/Logo-Import-Ready-White.svg" alt="STEMAlive" />
+        </header>
+        <main class="auth-container">
+            <h1 class="main-heading">Learn STEM the modern way</h1>
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input
+                        id="login-email"
+                        name="email"
+                        type="email"
+                        placeholder="name@gmail.com"
+                        required
+                        aria-describedby="email-help" />
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-container">
+                        <input
+                            id="login-password"
+                            name="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            required />
+                        <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div id="login-message" class="message" role="alert" aria-live="polite"></div>
+                <p class="legal-text">
+                    By continuing, you acknowledge the <a href="/privacy-policy">STEM Alive Privacy Policy</a>.
+                </p>
+                <div class="form-footer">
+                    Don't have an account? <a href="#" class="auth-toggle-link">Register here</a>
+                </div>
+            </form>
+            <form id="register-form" class="auth-form" style="display: none">
+                <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input id="register-name" name="name" type="text" placeholder="Name Surname" required />
+                </div>
 
-            <form action="https://it-fact.be/form.php" id="login-form" method="post">
-                <label for="name">Name</label>
-                <input id="name" name="name" placeholder="Name Surname" required type="text" />
-
-                <label for="email">Email</label>
-                <input id="email" name="email" placeholder="name@gmail.com" required type="email" />
-
-                <a href="subjects-choice.html" id="login-link" class="login-button">Login</a>
-
-                <p>By continuing, you acknowledge the STEM Alive Privacy Policy.</p>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input id="register-email" name="email" type="email" placeholder="name@gmail.com" required />
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <div class="password-container">
+                        <input
+                            id="register-password"
+                            name="password"
+                            type="password"
+                            placeholder="At least 6 characters"
+                            required
+                            minlength="6" />
+                        <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength"></div>
+                    <small class="password-hint">Use at least 6 characters with a mix of letters and numbers</small>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <div class="password-container">
+                        <input
+                            id="register-confirm-password"
+                            name="confirm-password"
+                            type="password"
+                            placeholder="Re-enter your password"
+                            required />
+                        <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+                <div id="register-message" class="message" role="alert" aria-live="polite"></div>
+                <p class="legal-text">
+                    By continuing, you acknowledge the <a href="/privacy-policy">STEM Alive Privacy Policy</a>.
+                </p>
+                <div class="form-footer">
+                    Already have an account? <a href="#" class="auth-toggle-link">Login here</a>
+                </div>
             </form>
         </main>
+        <div id="success-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-content">
+                <h3 id="modal-title">Registration Successful!</h3>
+                <p>Your account has been created. You can now login with your credentials.</p>
+                <button class="btn btn-primary" id="modal-continue-btn">Continue to Login</button>
+            </div>
+        </div>
+        <script src="index.js" defer></script>
     </body>
 </html>

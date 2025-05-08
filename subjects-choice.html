@@ -2,34 +2,58 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Choose a subject</title>
+        <title>Choose a Subject</title>
         <link rel="stylesheet" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     </head>
     <body>
-        <header>
-            <img src="/Assets/Logo-Import-Ready-White.svg" alt="STEMAlive" />
+        <header class="subjects-header">
+            <a href="index.html"
+                ><img src="/Assets/Logo-Import-Ready-White.svg" alt="STEMAlive" class="subjects-header-logo"
+            /></a>
+            <div class="subjects-account-menu">
+                <button class="subjects-account-toggle" id="subjects-account-toggle">
+                    <i class="fas fa-user-circle"></i>
+                </button>
+                <div class="subjects-dropdown-menu" id="subjects-dropdown-menu">
+                    <div class="subjects-user-info">
+                        <div class="subjects-user-name" id="subjects-user-name"></div>
+                        <div class="subjects-user-email" id="subjects-user-email"></div>
+                    </div>
+                    <a href="#" class="subjects-dropdown-item" id="subjects-account-settings">
+                        <i class="fas fa-user" style="margin-right: 8px"></i>Account Settings
+                    </a>
+                    <a href="#" class="subjects-dropdown-item" id="subjects-change-password">
+                        <i class="fas fa-key" style="margin-right: 8px"></i>Change Password
+                    </a>
+                    <div class="subjects-dropdown-divider"></div>
+                    <a href="#" class="subjects-dropdown-item" id="subjects-logout-btn">
+                        <i class="fas fa-sign-out-alt" style="margin-right: 8px"></i>Log Out
+                    </a>
+                </div>
+            </div>
         </header>
         <div id="subject-choice">
             <div id="scientist-text">
-                <h1>Choose your subject</h1>
-
+                <h1>Select a Scientist to Explore</h1>
                 <select id="scientistSelect">
-                    <option value="isaac">Learn Physics with Isaac</option>
-                    <option value="albert">Explore Relativity with Albert</option>
-                    <option value="tesla">Master Electricity with Nikola</option>
-                    <option value="galileo">Discover Forces with Galileo</option>
+                    <option value="isaac">Learn Physics with Isaac Newton</option>
+                    <option value="albert">Explore Relativity with Albert Einstein</option>
+                    <option value="tesla">Master Electricity with Nikola Tesla</option>
+                    <option value="galileo">Discover Forces with Galileo Galilei</option>
                 </select>
                 <hr />
-
                 <div id="subject-description">
                     <h3 id="subject-title">Physics, Mathematics, and Scientific Inquiry</h3>
                     <p id="description">
                         Description:<br />
-                        Students interact with Isaac Newton, the father of classical physics, to learn about his
-                        groundbreaking discoveries, including the laws of motion, universal gravitation, and calculus.
+                        Engage with Isaac Newton, the pioneer of classical physics. Journey through his revolutionary
+                        contributions that laid the groundwork for modern physics, including his acclaimed laws of
+                        motion, the concept of universal gravitation, and the principles of calculus—central to
+                        understanding the behavior of the physical world.
                     </p>
                 </div>
-
                 <a href="chapter-choice.html" id="next-button">NEXT</a>
             </div>
 
@@ -37,6 +61,55 @@
                 <img src="Assets/Newton.jpg" alt="Image of Isaac Newton" />
             </div>
         </div>
+
+        <div id="subjects-account-modal" class="subjects-account-modal">
+            <div class="subjects-account-modal-content">
+                <h3>Account Settings</h3>
+                <div class="form-group">
+                    <label for="subjects-account-name">Full Name</label>
+                    <input type="text" id="subjects-account-name" class="subjects-form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="subjects-account-email">Email</label>
+                    <input type="email" id="subjects-account-email" class="subjects-form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="subjects-account-phone">Phone Number (Optional)</label>
+                    <input
+                        type="tel"
+                        id="subjects-account-phone"
+                        class="subjects-form-control"
+                        placeholder="+1 (123) 456-7890" />
+                </div>
+                <div id="subjects-account-message" class="message"></div>
+                <button class="btn btn-primary" id="subjects-save-account-btn">Save Changes</button>
+                <button class="btn btn-primary" id="subjects-cancel-account-btn">Cancel</button>
+            </div>
+        </div>
+
+        <div id="subjects-password-modal" class="subjects-password-modal">
+            <div class="subjects-password-modal-content">
+                <h3>Change Password</h3>
+                <div class="form-group">
+                    <label for="subjects-current-password">Current Password</label>
+                    <input type="password" id="subjects-current-password" class="subjects-form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="subjects-new-password">New Password</label>
+                    <input type="password" id="subjects-new-password" class="subjects-form-control" minlength="6" />
+                </div>
+                <div class="form-group">
+                    <label for="subjects-confirm-new-password">Confirm New Password</label>
+                    <input type="password" id="subjects-confirm-new-password" class="subjects-form-control" />
+                </div>
+                <div id="subjects-password-message" class="message"></div>
+                <button class="btn btn-primary" id="subjects-save-password-btn">Save Changes</button>
+                <button class="btn btn-primary" id="subjects-cancel-password-btn">Cancel</button>
+            </div>
+        </div>
+
         <script src="subject-choose-script.js"></script>
+        <script src="password-change.js"></script>
+        <script src="account-settings.js"></script>
     </body>
 </html>
