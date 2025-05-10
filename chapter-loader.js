@@ -374,27 +374,142 @@ const learningContent = document.getElementById("learning-content");
 
 const chapters = chaptersByScientist[selectedScientist];
 
-// Populate the dropdown
-chapterSelect.innerHTML = "";
-chapters.forEach((ch, index) => {
-    const option = document.createElement("option");
-    option.value = index;
-    option.textContent = ch.title;
-    chapterSelect.appendChild(option);
-});
+// Store chapters in localStorage for reference
+localStorage.setItem("chapters", JSON.stringify(chapters));
 
+// Function to get progress color based on percentage
+function getProgressColor(percentage) {
+    if (percentage >= 80) return "#4CAF50"; // Green
+    if (percentage >= 50) return "#FFC107"; // Yellow
+    if (percentage > 0) return "#FF9800"; // Orange
+    return "#F44336"; // Red
+}
+
+// Populate the dropdown with progress indicators
+function populateChapterSelect() {
+    chapterSelect.innerHTML = "";
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    chapters.forEach((ch, index) => {
+        const option = document.createElement("option");
+        option.value = index;
+
+        // Default styling for no progress
+        option.style.color = "";
+        let progressText = "";
+
+        if (currentUser?.progress) {
+            const chapterKey = `${selectedScientist}_${ch.title.replace(/\s+/g, "_")}`;
+            const progress = currentUser.progress[chapterKey];
+
+            // Only show progress if it exists and has a bestScore
+            if (progress && progress.bestScore !== undefined) {
+                const percentage = Math.round((progress.bestScore / ch.exercises.length) * 100);
+                progressText = ` (${progress.bestScore}/${ch.exercises.length})`;
+                option.style.color = getProgressColor(percentage);
+            }
+        }
+
+        option.textContent = ch.title + progressText;
+        chapterSelect.appendChild(option);
+    });
+}
 function updateChapterInfo(index) {
     chapterTitle.textContent = chapters[index].title;
     description.textContent = chapters[index].desc;
     learningContent.innerHTML = chapters[index].learningContent;
+
+    // Clear any existing progress indicator first
+    const existingProgress = document.querySelector(".progress-indicator");
+    if (existingProgress) {
+        existingProgress.remove();
+    }
+
+    // Add progress indicator if available and for the current chapter
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser?.progress) {
+        const chapterKey = `${selectedScientist}_${chapters[index].title.replace(/\s+/g, "_")}`;
+        const progress = currentUser.progress[chapterKey];
+
+        // Only show progress if it exists for this specific chapter
+        if (progress && progress.bestScore !== undefined) {
+            const percentage = Math.round((progress.bestScore / chapters[index].exercises.length) * 100);
+            const progressText = `Progress: ${progress.bestScore}/${chapters[index].exercises.length} (${percentage}%)`;
+            const progressElement = document.createElement("div");
+            progressElement.className = "progress-indicator";
+            progressElement.textContent = progressText;
+            progressElement.style.color = getProgressColor(percentage);
+
+            chapterTitle.insertAdjacentElement("afterend", progressElement);
+        }
+    }
 }
 
-// Set initial info
-updateChapterInfo(0);
+function updateProgressOverview() {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const progressChart = document.getElementById("progress-chart");
 
-// Update on dropdown change
-chapterSelect.addEventListener("change", function () {
-    updateChapterInfo(this.value);
+    if (!currentUser?.progress || !progressChart) return;
+
+    let html = "";
+    let totalCompleted = 0;
+    let totalExercises = 0;
+
+    chapters.forEach((chapter) => {
+        const chapterKey = `${selectedScientist}_${chapter.title.replace(/\s+/g, "_")}`;
+        const progress = currentUser.progress[chapterKey];
+        const percentage = progress ? Math.round((progress.bestScore / chapter.exercises.length) * 100) : 0;
+        const progressColor = getProgressColor(percentage);
+
+        totalExercises += chapter.exercises.length;
+        if (progress) {
+            totalCompleted += progress.bestScore;
+        }
+
+        html += `
+            <div class="progress-item">
+                <div class="progress-title">
+                    <span>${chapter.title}</span>
+                    <span>${progress ? `${progress.bestScore}/${chapter.exercises.length}` : "Not started"} 
+                    <span style="color: ${progressColor}">(${percentage}%)</span></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${percentage}%; background-color: ${progressColor}"></div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Add total progress
+    const totalPercentage = totalExercises > 0 ? Math.round((totalCompleted / totalExercises) * 100) : 0;
+    const totalColor = getProgressColor(totalPercentage);
+    html =
+        `
+        <div class="progress-item total-progress">
+            <div class="progress-title">
+                <strong>Total Progress</strong>
+                <strong>${totalCompleted}/${totalExercises} <span style="color: ${totalColor}">(${totalPercentage}%)</span></strong>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${totalPercentage}%; background-color: ${totalColor}"></div>
+            </div>
+        </div>
+    ` + html;
+
+    progressChart.innerHTML = html;
+}
+
+// Initialize the page
+document.addEventListener("DOMContentLoaded", function () {
+    populateChapterSelect();
+    updateChapterInfo(0);
+    updateProgressOverview();
+
+    // Update when chapter selection changes
+    chapterSelect.addEventListener("change", function () {
+        updateChapterInfo(this.value);
+        updateProgressOverview();
+    });
 });
 
 // Handle next button click

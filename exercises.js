@@ -6,6 +6,10 @@ const scientistImages = {
         "https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg"
 };
 
+// Load current user data
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const usersDB = JSON.parse(localStorage.getItem("users")) || [];
+
 // Load chapter data
 const chapterData = JSON.parse(localStorage.getItem("selectedChapter"));
 if (!chapterData) {
@@ -118,9 +122,30 @@ function showCompletionScreen() {
     clearInterval(timerInterval);
     const finalTime = document.getElementById("timer").textContent;
 
+    // Save progress to user data
+    const chapterKey = `${chapterData.scientist}_${chapterData.title.replace(/\s+/g, "_")}`;
+
+    if (!currentUser.progress) {
+        currentUser.progress = {};
+    }
+
+    currentUser.progress[chapterKey] = {
+        completed: true,
+        score: score,
+        total: exercises.length,
+        lastAttempt: new Date().toISOString(),
+        bestScore: Math.max(score, currentUser.progress[chapterKey]?.bestScore || 0)
+    };
+
+    // Update the user in the database
+    const userIndex = usersDB.findIndex((u) => u.email === currentUser.email);
+    if (userIndex !== -1) {
+        usersDB[userIndex] = currentUser;
+        localStorage.setItem("users", JSON.stringify(usersDB));
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+
     // Get current chapter data
-    const chapterData = JSON.parse(localStorage.getItem("selectedChapter"));
-    const selectedScientist = localStorage.getItem("selectedScientist") || "isaac";
     const allChapters = JSON.parse(localStorage.getItem("chapters")) || [];
 
     // Safely find current chapter and next chapter
