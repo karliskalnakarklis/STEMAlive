@@ -46,6 +46,26 @@ const content = {
         desc: "Join Galileo Galilei on his scientific journey. Examine his groundbreaking contributions to mechanics, the development of the scientific method, and his astronomical observations which confirmed the heliocentric model, forever changing our perception of the cosmos."
     }
 };
+// RANDOM IMAGE LOADER ADDED HERE
+function updateScientistImage(scientist) {
+    const imagePool = {
+        isaac: ["Assets/Newton-1.png", "Assets/Newton-2.png", "Assets/Newton-3.png"],
+        albert: ["Assets/Einstein-1.png", "Assets/Einstein-2.png", "Assets/Einstein-3.png"],
+        tesla: ["Assets/Tesla-1.jpg", "Assets/Tesla-2.jpg", "Assets/Tesla-3.jpg"],
+        galileo: ["Assets/Galileo-1.png", "Assets/Galileo-2.png"]
+    };
+
+    const images = imagePool[scientist];
+    if (!images) return;
+
+    const randomIndex = Math.floor(Math.random() * images.length);
+    const selectedImage = images[randomIndex];
+
+    scientistImage.src = selectedImage;
+    scientistImage.alt = `${scientist} image`;
+    imageStatus.textContent = "";
+}
+
 
 // Add an event listener to the select element
 scientistSelect.addEventListener("change", function () {
@@ -56,6 +76,7 @@ scientistSelect.addEventListener("change", function () {
 
     subjectTitle.textContent = content[selectedScientist].title;
     description.innerHTML = content[selectedScientist].desc;
+    updateScientistImage(selectedScientist); // ✅ trigger image update
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -63,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     scientistSelect.value = selectedScientist;
     subjectTitle.textContent = content[selectedScientist].title;
     description.innerHTML = content[selectedScientist].desc;
+    updateScientistImage(selectedScientist);
 });
 
 // Account Settings logic
