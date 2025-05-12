@@ -2,12 +2,11 @@ const scientistImages = {
     isaac: "https://upload.wikimedia.org/wikipedia/commons/2/22/Sir_Isaac_Newton_%281642-1727%29.jpg",
     albert: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg",
     tesla: "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg",
-    galileo:
-        "https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg"
+    galileo: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg"
 };
 
 // Load current user data
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { id: "guest_user" };
 const usersDB = JSON.parse(localStorage.getItem("users")) || [];
 
 // Load chapter data
@@ -25,13 +24,9 @@ let score = 0;
 let startTime = Date.now();
 let timerInterval;
 
-// Initialize the exercise
 function initExercise() {
-    // Start timer
     timerInterval = setInterval(updateTimer, 1000);
     updateTimer();
-
-    // Render first exercise
     renderExercise();
 }
 
@@ -51,42 +46,39 @@ function renderExercise() {
             <div class="exercise-card">
                 <div class="exercise-number">EXERCISE ${currentExercise + 1} OF ${exercises.length}</div>
                 <h2 class="exercise-question">${exercise.question}</h2>
+                
                 <input type="text" class="answer-input" id="answer" placeholder="Type your answer here...">
-                
-                <div class="ai-help-container">
-                    <input type="text" class="answer-input" id="ai-help-input" placeholder="Ask AI for help...">
-                    <div id="ai-response" class="ai-response"></div>
-                </div>
-                
                 <button class="submit-btn" id="submit-btn">Submit Answer</button>
                 <div id="feedback" class="feedback"></div>
+                
+                <div class="ai-help-section">
+                    <h3 class="ai-help-title">Need help from ${scientist}?</h3>
+                    <div class="ai-chat-container">
+                        <div class="messages" id="ai-messages"></div>
+                        <div class="ai-input-container">
+                            <input type="text" class="ai-help-input" id="ai-help-input" 
+                                   placeholder="Ask ${scientist} a question...">
+                            <button class="ai-send-btn" id="ai-send-btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <img class="scientist-image" src="${scientistImages[scientist]}" alt="${scientist}">
+            <img class="scientist-image" src="${scientistImages[scientist.toLowerCase()]}" alt="${scientist}">
         </div>
     `;
 
-    // Focus input and set up event listeners
     document.getElementById("answer").focus();
     document.getElementById("submit-btn").addEventListener("click", checkAnswer);
-    document.getElementById("answer").addEventListener("keypress", function (e) {
+    document.getElementById("answer").addEventListener("keypress", function(e) {
         if (e.key === "Enter") checkAnswer();
     });
 
-    // Set up AI help functionality
-    document.getElementById("ai-help-input").addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            const question = this.value.trim();
-            if (question) {
-                const responseBox = document.getElementById("ai-response");
-                responseBox.innerHTML = `
-                    <div class="ai-question">You asked: "${question}"</div>
-                    <div class="ai-answer">This is where the AI response would appear.</div>
-                `;
-                responseBox.style.display = "block";
-                this.value = "";
-            }
-        }
-    });
+    // Initialize AI chat
+    setTimeout(() => {
+        initAIChat(scientist, currentUser.id);
+    }, 100);
 }
 
 function checkAnswer() {
@@ -225,4 +217,4 @@ function showCompletionScreen() {
 }
 
 // Start the exercises
-initExercise();
+document.addEventListener('DOMContentLoaded', initExercise);
