@@ -49,7 +49,7 @@ const content = {
 // RANDOM IMAGE LOADER ADDED HERE
 function updateScientistImage(scientist) {
     const imagePool = {
-        isaac: ["Assets/Newton-1.png", "Assets/Newton-2.png", "Assets/Newton-3.png"],
+        isaac: ["Assets/Newton-1.png", "Assets/Newton-2.jpg", "Assets/Newton-3.jpg"],
         albert: ["Assets/Einstein-1.png", "Assets/Einstein-2.png", "Assets/Einstein-3.png"],
         tesla: ["Assets/Tesla-1.jpg", "Assets/Tesla-2.jpg", "Assets/Tesla-3.jpg"],
         galileo: ["Assets/Galileo-1.png", "Assets/Galileo-2.png"]
