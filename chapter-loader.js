@@ -365,6 +365,18 @@ const chaptersByScientist = {
     ]
 };
 
+const chapterImages = {
+    "Foundations of Motion": "FoundationMotion.png",
+    "Gravitation and Orbits": "GravitationOrbits.png",
+    "Special Relativity": "SpecialRelativity.png",
+    "General Relativity": "GeneralRelativity.png",
+    "Alternating Current": "AlternatingCurrent.png",
+    "Wireless Energy": "WirelessEnergy.png",
+    "Astronomical Discoveries": "Astronomical.png",
+    "The Scientific Method": "ScientificMethod.png"
+};      
+
+
 const selectedScientist = localStorage.getItem("selectedScientist") || "isaac";
 const chapterSelect = document.getElementById("chapterSelect");
 const chapterTitle = document.getElementById("chapter-title");
@@ -419,6 +431,14 @@ function updateChapterInfo(index) {
     description.textContent = chapters[index].desc;
     learningContent.innerHTML = chapters[index].learningContent;
 
+    // Update image
+    const chapterImage = document.getElementById("chapter-image");
+    const imageFile = chapterImages[chapters[index].title];
+    if (chapterImage && imageFile) {
+        chapterImage.src = `Assets/${imageFile}`;
+        chapterImage.alt = `Image for ${chapters[index].title}`;
+    }
+    
     // Clear any existing progress indicator first
     const existingProgress = document.querySelector(".progress-indicator");
     if (existingProgress) {
