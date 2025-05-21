@@ -1,8 +1,8 @@
 const scientistImages = {
-    isaac: "https://upload.wikimedia.org/wikipedia/commons/2/22/Sir_Isaac_Newton_%281642-1727%29.jpg",
-    albert: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Albert_Einstein_Head.jpg",
-    tesla: "https://upload.wikimedia.org/wikipedia/commons/7/79/Tesla_circa_1890.jpeg",
-    galileo: "https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg"
+    isaac: "Assets/Newton-1.png",
+    albert: "Assets/Einstein-1.png",
+    tesla: "Assets/Tesla-1.jpg",
+    galileo: "Assets/Galileo-1.png"
 };
 
 // Load current user data
@@ -129,6 +129,23 @@ function showCompletionScreen() {
         bestScore: Math.max(score, currentUser.progress[chapterKey]?.bestScore || 0)
     };
 
+    // Award badge if all chapters of the scientist are passed
+    const allChapters = JSON.parse(localStorage.getItem("chapters")) || [];
+    const allCompleted = allChapters.every(ch => {
+        const key = `${chapterData.scientist}_${ch.title.replace(/\s+/g, "_")}`;
+        const progress = currentUser.progress[key];
+        return progress && progress.bestScore >= ch.exercises.length / 2;
+    });
+
+    if (!currentUser.achievements) {
+        currentUser.achievements = {};
+    }
+
+    if (allCompleted && !currentUser.achievements[chapterData.scientist]) {
+        currentUser.achievements[chapterData.scientist] = true;
+        alert(`🏅 Congratulations! You earned the ${chapterData.scientist} badge!`);
+    }
+
     // Update the user in the database
     const userIndex = usersDB.findIndex((u) => u.email === currentUser.email);
     if (userIndex !== -1) {
@@ -136,9 +153,6 @@ function showCompletionScreen() {
         localStorage.setItem("users", JSON.stringify(usersDB));
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
     }
-
-    // Get current chapter data
-    const allChapters = JSON.parse(localStorage.getItem("chapters")) || [];
 
     // Safely find current chapter and next chapter
     let currentChapterIndex = -1;
@@ -198,7 +212,6 @@ function showCompletionScreen() {
     if (score >= exercises.length / 2) {
         if (nextChapter) {
             document.getElementById("next-chapter-btn").addEventListener("click", function () {
-                // Store next chapter data for exercises page
                 localStorage.setItem("selectedChapter", JSON.stringify(nextChapter));
                 window.location.href = "exercises.html";
             });
@@ -209,7 +222,6 @@ function showCompletionScreen() {
         }
     } else {
         document.getElementById("study-more-btn").addEventListener("click", function () {
-            // Store current chapter data for learning content
             localStorage.setItem("selectedChapter", JSON.stringify(chapterData));
             window.location.href = "chapter-choice.html";
         });

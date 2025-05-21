@@ -14,8 +14,23 @@
             integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
             crossorigin="anonymous"
             referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="dark-mode.css" />
+        
+
     </head>
     <body>
+                <div id="top-controls">
+            <div class="language-group">
+                🌐 Language:
+                <select id="language-dropdown">
+                    <option value="en">English</option>
+                    <option value="nl">Nederlands</option>
+                    <option value="fr">Français</option>
+                </select>
+            </div>
+            
+        </div>
+
         <main class="auth-container">
             <div id="index-logo">
                 <img src="Assets/Logo-Import-Ready.svg" alt="STEMAlive" />
@@ -31,7 +46,14 @@
                         placeholder="name@gmail.com"
                         required
                         aria-describedby="email-help" />
+                    <small id="login-email-feedback" class="input-feedback"></small>
+
                 </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="remember-me" />
+                    <label for="remember-me">Remember Me</label>
+                </div>
+
                 <div class="form-group">
                     <label for="login-password">Password</label>
                     <div class="password-container">
@@ -41,13 +63,17 @@
                             type="password"
                             placeholder="Enter your password"
                             required />
+                        <small id="register-email-feedback" class="input-feedback"></small>
+
                         <button type="button" class="password-toggle" aria-label="Toggle password visibility">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Login</button>
                 <div id="login-message" class="message" role="alert" aria-live="polite"></div>
+                <div class="password-strength" id="password-strength"></div>
                 <div class="form-footer">
                     Don't have an account? <a href="#" class="auth-toggle-link">Register here</a>
                 </div>
@@ -108,5 +134,7 @@
             </div>
         </div>
         <script src="index.js" defer></script>
+        <script src="theme-toggle.js" defer></script>
+
     </body>
 </html>

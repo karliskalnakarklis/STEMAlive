@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     </head>
     <body>
+        <div style="min-height: 100vh; display: flex; flex-direction: column;">
         <header class="subjects-header">
             <a href="index.html"
                 ><img src="/Assets/Logo-Import-Ready-White.svg" alt="STEMAlive" class="subjects-header-logo"
@@ -31,9 +32,12 @@
                     <a href="#" class="subjects-dropdown-item" id="subjects-logout-btn">
                         <i class="fas fa-sign-out-alt" style="margin-right: 8px"></i>Log Out
                     </a>
+                    
                 </div>
+
             </div>
         </header>
+            <div id="badges-display"></div>
         <div id="subject-choice">
             <div id="scientist-text">
                 <h1>Select a Scientist to Explore</h1>
@@ -107,6 +111,16 @@
                 <button class="btn btn-primary" id="subjects-cancel-password-btn">Cancel</button>
             </div>
         </div>
+        <footer class="site-footer">
+            <p>
+                Curriculum content adapted from
+                <a href="https://onderwijsdoelen.be/resultaten?onderwijsstructuur=SO_2DE_GRAAD&version=V2_1&filters=onderwijsniveau%255B0%255D%255Bid%255D%3D0767c5a44ffdc8a05697bbe5b2021167fb49cf6e%26onderwijsniveau%255B0%255D%255Btitel%255D%3DSecundair%2520onderwijs%26onderwijsniveau%255B0%255D%255Bwaarde%255D%3DSecundair%2520onderwijs..." 
+                   target="_blank" rel="noopener noreferrer">onderwijsdoelen.be</a>.
+            </p>
+            <p>© 2025 STEM Alive. All rights reserved.</p>
+        </footer>
+    </div>
+
 
         <script src="subject-choose-script.js"></script>
         <script src="password-change.js"></script>

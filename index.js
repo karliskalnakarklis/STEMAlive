@@ -1,3 +1,4 @@
+
 /**
  * STEM Alive - Authentication System
  * Handles user registration, login, and session management
@@ -13,8 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function initializeAuthSystem() {
-    // Check if user is already logged in
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const currentUser = JSON.parse(localStorage.getItem("currentUser") || sessionStorage.getItem("currentUser"));
 
     if (currentUser) {
         redirectToDashboard();
@@ -30,6 +30,96 @@ function setupEventListeners() {
             const inputId = this.getAttribute("data-target");
             togglePasswordVisibility(inputId, this);
         });
+    });
+const translations = {
+    en: {
+        email: "Email",
+        password: "Password",
+        login: "Login",
+        register: "Register",
+        confirmPassword: "Confirm Password",
+        fullName: "Full Name",
+        registerHere: "Register here",
+        loginHere: "Login here"
+    },
+    nl: {
+        email: "E-mail",
+        password: "Wachtwoord",
+        login: "Inloggen",
+        register: "Registreren",
+        confirmPassword: "Bevestig wachtwoord",
+        fullName: "Volledige naam",
+        registerHere: "Registreer hier",
+        loginHere: "Log hier in"
+    },
+    fr: {
+        email: "E-mail",
+        password: "Mot de passe",
+        login: "Connexion",
+        register: "S'inscrire",
+        confirmPassword: "Confirmez le mot de passe",
+        fullName: "Nom complet",
+        registerHere: "S'inscrire ici",
+        loginHere: "Connectez-vous ici"
+    }
+};
+
+function applyLanguage(lang) {
+    const t = translations[lang];
+    document.querySelector("label[for='login-email']").textContent = t.email;
+    document.querySelector("label[for='login-password']").textContent = t.password;
+    document.querySelector("button[type='submit']").textContent = t.login;
+    document.querySelector(".form-footer a.auth-toggle-link").textContent = t.registerHere;
+
+    document.querySelector("label[for='register-name']").textContent = t.fullName;
+    document.querySelector("label[for='register-email']").textContent = t.email;
+    document.querySelector("label[for='register-password']").textContent = t.password;
+    document.querySelector("label[for='register-confirm-password']").textContent = t.confirmPassword;
+    document.querySelector("#register-form button[type='submit']").textContent = t.register;
+    document.querySelector("#register-form .form-footer a.auth-toggle-link").textContent = t.loginHere;
+}
+
+document.getElementById("language-dropdown").addEventListener("change", function () {
+    const selectedLang = this.value;
+    localStorage.setItem("preferredLang", selectedLang);
+    applyLanguage(selectedLang);
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const savedLang = localStorage.getItem("preferredLang") || "en";
+    document.getElementById("language-dropdown").value = savedLang;
+    applyLanguage(savedLang);
+});
+
+    // Live email validation
+    document.getElementById("login-email").addEventListener("input", function () {
+        const feedback = document.getElementById("login-email-feedback");
+        const isValid = validateEmail(this.value);
+        feedback.textContent = isValid ? "✅ Valid email" : "Invalid email format";
+        feedback.className = `input-feedback ${isValid ? "valid" : "invalid"}`;
+    });
+
+    document.getElementById("register-email").addEventListener("input", function () {
+        const feedback = document.getElementById("register-email-feedback");
+        const isValid = validateEmail(this.value);
+        feedback.textContent = isValid ? "Valid email ✅" : "Invalid email";
+        feedback.className = `input-feedback ${isValid ? "valid" : "invalid"}`;
+    });
+
+    // Password strength meter
+    document.getElementById("register-password").addEventListener("input", function () {
+        const bar = document.getElementById("password-strength");
+        const val = this.value;
+        let strength = 0;
+        if (val.length >= 6) strength++;
+        if (/[A-Z]/.test(val)) strength++;
+        if (/[0-9]/.test(val)) strength++;
+        if (/[^A-Za-z0-9]/.test(val)) strength++;
+
+        const percent = strength * 25;
+        bar.style.setProperty('--strength-percent', `${percent}%`);
+        bar.style.background = strength >= 3 ? "linear-gradient(to right, #4caf50, #81c784)" : "#f44336";
+        bar.querySelector("::before");
     });
 
     // Form submissions
@@ -192,7 +282,12 @@ function createUserSession(user) {
         email: user.email,
         lastLogin: new Date().toISOString()
     };
-    localStorage.setItem("currentUser", JSON.stringify(sessionData));
+    const remember = document.getElementById("remember-me");
+    if (remember?.checked) {
+        localStorage.setItem("currentUser", JSON.stringify(sessionData));
+    } else {
+        sessionStorage.setItem("currentUser", JSON.stringify(sessionData));
+    }
 }
 
 function clearMessages() {

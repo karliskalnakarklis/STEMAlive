@@ -64,7 +64,7 @@
             }
         </style>
     </head>
-    <body>
+    <body data-context="chapter">
         <header class="subjects-header">
             <a href="index.html"
                 ><img src="/Assets/Logo-Import-Ready-White.svg" alt="STEMAlive" class="subjects-header-logo"
@@ -89,11 +89,13 @@
                         <i class="fas fa-sign-out-alt" style="margin-right: 8px"></i>Log Out
                     </a>
                 </div>
+
             </div>
         </header>
+        <div id="badges-display"></div>
         <div id="chapter-choice">
             <div id="chapter-text">
-                <h1>Select a Chapter to Begin Your Learning Journey</h1>
+                <h1 id="chapter-title-header">Select a Chapter to Begin Your Learning Journey</h1>
 
                 <div id="progress-overview">
                     <h3>Your Learning Progress</h3>
@@ -171,5 +173,7 @@
         <script src="chapter-loader.js"></script>
         <script src="password-change.js"></script>
         <script src="account-settings.js"></script>
+        <script src="multi-language.js" defer></script>
+
     </body>
 </html>

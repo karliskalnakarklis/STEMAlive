@@ -525,6 +525,20 @@ document.addEventListener("DOMContentLoaded", function () {
     updateChapterInfo(0);
     updateProgressOverview();
 
+    // Show earned badges (gamification)
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const badgeDisplay = document.getElementById("badges-display");
+
+    if (currentUser?.achievements && badgeDisplay) {
+        Object.keys(currentUser.achievements).forEach((scientist) => {
+            const badge = document.createElement("div");
+            badge.className = "badge-item";
+            badge.textContent = `🏅 ${scientist}`;
+            badge.style.marginRight = "10px";
+            badgeDisplay.appendChild(badge);
+        });
+    }
+
     // Update when chapter selection changes
     chapterSelect.addEventListener("change", function () {
         updateChapterInfo(this.value);
